@@ -18,7 +18,7 @@ _Need Docker?_ There's a [quick install guide](#Install-Docker) provided below.
 <sub>**Info:** Executing the `entrypoint.sh` outside of the Docker container will fail. It is a script which runs automatically by and inside the docker container itself.</sub>  
 
 * Run the following to build the docker image with the default configuration:  
-`docker build -t calebprovost/dockter-l4t:latest .`  
+`docker build -t calebprovost/dockter-l4t:latest .` Or pull it from docker hub: `docker pull calebprovost/dockter-l4t`  
 
     If you'd like to override the default branch, machine, target distro, or other settings, you can do so by overwriting their values with the argument tag `--build-arg VAR=value`. Below is an example provided to demonstrate this. See the file `env.list` for defaults and overwritable variables.  
 
@@ -37,7 +37,7 @@ Start the Docker container with the command below and it will kick off an instal
 You will be prompted to follow the link and log into the nVidia developer's account which will then validate the install.  
 Note: The following example maps the build output directory to the directory where this Dockerfile is executed  
 
-`docker run -it -v $PWD:/home/aesd/ --name dl4t --env-file ./env.list calebprovost/dockter-l4t:latest`
+`docker run -it -v $PWD:/home/user/build --name dl4t --env-file ./env.list calebprovost/dockter-l4t:latest`
 
 ## Flash the SD Card
 

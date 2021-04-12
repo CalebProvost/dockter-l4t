@@ -106,11 +106,6 @@ RUN pip3 install -U pip \
     -U colcon-core \
     -U colcon-common-extensions
 
-# User management
-RUN adduser --disabled-password --gecos '' user
-RUN adduser user sudo
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
 # Docker Dependencies for nVidia SDK Install
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
     gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -123,6 +118,11 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y docker.i
 RUN wget https://github.com/CalebProvost/dockter-l4t/raw/master/sdkmanager_1.4.1-7402_amd64.deb
 RUN apt-get install -y ./sdkmanager_1.4.1-7402_amd64.deb
 
+# User management
+RUN adduser --disabled-password --gecos '' user
+RUN adduser user sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
 # Set environment
 RUN dpkg-reconfigure locales
 RUN locale-gen en_US.UTF-8
@@ -130,9 +130,10 @@ ENV LANG en_us.UTF-8
 ENV LC_ALL en_US.UTF-8
 ENV NVIDIA_DEVNET_MIRROR "file:///home/user/sdk_downloads"
 RUN update-locale
+RUN mkdir -p /home/user/build
 USER user
-WORKDIR /home/user
+WORKDIR /home/user/build
 
 # Script to Begin the Yocto Build for Jetson Image
-COPY entrypoint.sh .
-CMD [ "bash", "-c", "./entrypoint.sh" ]
+COPY entrypoint.sh /home/user/build/
+ENTRYPOINT [ "/home/user/build/entrypoint.sh" ]

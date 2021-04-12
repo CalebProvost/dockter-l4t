@@ -7,7 +7,7 @@ CUR_DIR=$(pwd)
 [ -z "${BRANCH}" ] && export BRANCH="c4ef10f44d92ac9f1e4725178ab0cefd9add8126"
 [ -z "${DISTRO}" ] && export DISTRO="tegrademo"
 [ -z "${BUILD_IMAGE}" ] && export BUILD_IMAGE="demo-image-full"
-[ -z "${NVIDIA_DEVNET_MIRROR}" ] && export NVIDIA_DEVNET_MIRROR="file://${CUR_DIR}/sdk_downloads"
+[ -z "${NVIDIA_DEVNET_MIRROR}" ] && export NVIDIA_DEVNET_MIRROR="file:///home/user/sdk_downloads"
 # For SDK Install
 [ -z "${SDK_PRODUCT}" ] && export SDK_PRODUCT='--product Jetson'
 [ -z "${SDK_VERSION}" ] && export SDK_VERSION='--version 4.5.1'
@@ -19,8 +19,8 @@ CUR_DIR=$(pwd)
 [ -z "${SDK_SELECTIONS}" ] && export SDK_SELECTIONS='--select "Jetson OS" --select "Jetson SDK Components"'
 [ -z "${SDK_LICENSE}" ] && export SDK_LICENSE='--license accept'
 [ -z "${SDK_DATACOLLECT}" ] && export SDK_DATACOLLECT='--datacollection disable'
-[ -z "${SDK_DLDIR}" ] && export SDK_DLDIR="--downloadfolder ${CUR_DIR}/sdk_downloads"
-[ -z "${SDK_IMGDIR}" ] && export SDK_IMGDIR="--targetimagefolder ${CUR_DIR}/nvidia/nvidia_sdk/"
+[ -z "${SDK_DLDIR}" ] && export SDK_DLDIR="--downloadfolder /home/user/sdk_downloads"
+[ -z "${SDK_IMGDIR}" ] && export SDK_IMGDIR="--targetimagefolder /home/user/nvidia/nvidia_sdk/"
 
 # Installs the nVidia SDK
 sdkmanager --cli install --staylogin true ${SDK_PRODUCT} ${SDK_VERSION} \
