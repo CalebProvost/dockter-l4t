@@ -19,8 +19,8 @@ CUR_DIR=$(pwd)
 [ -z "${SDK_SELECTIONS}" ] && export SDK_SELECTIONS='--select "Jetson OS" --select "Jetson SDK Components"'
 [ -z "${SDK_LICENSE}" ] && export SDK_LICENSE='--license accept'
 [ -z "${SDK_DATACOLLECT}" ] && export SDK_DATACOLLECT='--datacollection disable'
-[ -z "${SDK_DLDIR}" ] && export SDK_DLDIR='--downloadfolder "/home/user/sdk_downloads"'
-[ -z "${SDK_IMGDIR}" ] && export SDK_IMGDIR='--targetimagefolder "/home/user/nvidia/nvidia_sdk/"'
+[ -z "${SDK_DLDIR}" ] && export SDK_DLDIR='--downloadfolder /home/user/sdk_downloads'
+[ -z "${SDK_IMGDIR}" ] && export SDK_IMGDIR='--targetimagefolder /home/user/nvidia/nvidia_sdk/'
 
 # Installs the nVidia SDK
 sdkmanager --cli install --staylogin true ${SDK_PRODUCT} ${SDK_VERSION} \
