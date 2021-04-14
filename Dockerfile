@@ -131,9 +131,9 @@ ENV LC_ALL en_US.UTF-8
 ENV NVIDIA_DEVNET_MIRROR "file:///home/user/sdk_downloads"
 RUN update-locale
 RUN mkdir -p /home/user/build
+COPY ./entrypoint.sh /home/user/build/
 USER user
 WORKDIR /home/user/build
 
-# Script to Begin the Yocto Build for Jetson Image
-COPY entrypoint.sh /home/user/build/
-ENTRYPOINT [ "/home/user/build/entrypoint.sh" ]
+# ENTRYPOINT [ "/home/user/build/entrypoint.sh" ]
+CMD [ "bash", "-c", "/home/user/build/entrypoint.sh" ]

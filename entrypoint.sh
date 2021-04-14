@@ -19,13 +19,13 @@ CUR_DIR=$(pwd)
 [ -z "${SDK_SELECTIONS}" ] && export SDK_SELECTIONS='--select "Jetson OS" --select "Jetson SDK Components"'
 [ -z "${SDK_LICENSE}" ] && export SDK_LICENSE='--license accept'
 [ -z "${SDK_DATACOLLECT}" ] && export SDK_DATACOLLECT='--datacollection disable'
-[ -z "${SDK_DLDIR}" ] && export SDK_DLDIR="--downloadfolder /home/user/sdk_downloads"
-[ -z "${SDK_IMGDIR}" ] && export SDK_IMGDIR="--targetimagefolder /home/user/nvidia/nvidia_sdk/"
+[ -z "${SDK_DLDIR}" ] && export SDK_DLDIR='--downloadfolder "/home/user/sdk_downloads"'
+[ -z "${SDK_IMGDIR}" ] && export SDK_IMGDIR='--targetimagefolder "/home/user/nvidia/nvidia_sdk/"'
 
 # Installs the nVidia SDK
 sdkmanager --cli install --staylogin true ${SDK_PRODUCT} ${SDK_VERSION} \
     ${SDK_TGTOS} ${SDK_ASHOST} ${SDK_TGTMACH} ${SDK_FLASH} ${SDK_ADDITIONS} \
-    ${SDK_SELECTIONS} ${SDK_LICENSE} ${SDK_DATACOLLECT} ${SDK_DLDIR} \
+    '${SDK_SELECTIONS}' ${SDK_LICENSE} ${SDK_DATACOLLECT} ${SDK_DLDIR} \
     ${SDK_IMGDIR} --sudopassword '\n'
 
 # Clone L4T Yocto Base
@@ -44,13 +44,19 @@ if [ "${YL4T_SUCCESS}" = "true" ]; then
     cd "${CUR_DIR}/tegraflash" || echo "Could Not Enter SD Card Staging Directory"
     cp "${CUR_DIR}/tegra-demo-distro/build/tmp/deploy/images/${MACHINE}/${BUILD_IMAGE}-${MACHINE}.tegraflash.tar.gz" "${CUR_DIR}/tegraflash/"
     tar -xf "${CUR_DIR}/tegra-demo-distro/build/tmp/deploy/images/${MACHINE}/${BUILD_IMAGE}-${MACHINE}.tegraflash.tar.gz"
-    ./dosdcard.sh "${BUILD_IMAGE}-${MACHINE}.img"
-    mv "${BUILD_IMAGE}-${MACHINE}.img" "${CUR_DIR}"
+    [ -f "../${BUILD_IMAGE}-${MACHINE}.img" ] && rm -rf "../${BUILD_IMAGE}-${MACHINE}.img"
+    ./dosdcard.sh "../${BUILD_IMAGE}-${MACHINE}.img" && SDCARD_IMAGE="true"
 
-    echo "#########################################################################################"
-    echo "Yocto has built the L4T image. You can find the deloyment files here: ${CUR_DIR}/tegra-demo-distro/build/tmp/deploy/images/${MACHINE}/"
-    echo "For your conveinence, we've prepped an SD Card image for you to flash here: ${CUR_DIR}/${BUILD_IMAGE}-${MACHINE}.img"
-    echo "#########################################################################################"
+    echo "" && echo ""
+    echo "####################################################################################################"
+    echo "Yocto has finished building the OE4T image \"${BUILD_IMAGE}\" for the \"${MACHINE}\"."
+    echo "Deloyment files can be found here: ${CUR_DIR}/tegra-demo-distro/build/tmp/deploy/images/${MACHINE}/"
+    if [ "${SDCARD_IMAGE}" = "true" ]; then
+        echo ""
+        echo "SD Card image for flashing can be found here: ${CUR_DIR}/${BUILD_IMAGE}-${MACHINE}.img"
+    fi
+    echo "####################################################################################################"
+    echo ""
     exit 0
     
 else
