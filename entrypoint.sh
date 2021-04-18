@@ -54,6 +54,13 @@ if [ "${YL4T_SUCCESS}" = "true" ]; then
     if [ "${SDCARD_IMAGE}" = "true" ]; then
         echo ""
         echo "SD Card image for flashing can be found here: ${CUR_DIR}/${BUILD_IMAGE}-${MACHINE}.img"
+    else
+        echo "Yocto Build of OE4T Complete. SD Card Image creation has failed."
+        echo "Follow the steps echo'ed below to try again (externally from docker)"
+        echo 'mkdir -p "$PWD/tegraflash" && cd "$PWD/tegraflash"'
+        echo 'cp "$PWD/tegra-demo-distro/build/tmp/deploy/images/${MACHINE}/${BUILD_IMAGE}-${MACHINE}.tegraflash.tar.gz" .'
+        echo 'tar -xf "$PWD/tegra-demo-distro/build/tmp/deploy/images/${MACHINE}/${BUILD_IMAGE}-${MACHINE}.tegraflash.tar.gz"'
+        echo './dosdcard.sh "../${BUILD_IMAGE}-${MACHINE}.img"'
     fi
     echo "####################################################################################################"
     echo ""
