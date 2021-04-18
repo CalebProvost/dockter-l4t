@@ -44,6 +44,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     clang-format \
     clang-tidy \
     cpio \
+    gdisk \
     diffstat \
     build-essential \
     bmap-tools \
