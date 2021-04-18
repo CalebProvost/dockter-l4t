@@ -44,7 +44,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     clang-format \
     clang-tidy \
     cpio \
-    gdisk \
     diffstat \
     build-essential \
     bmap-tools \
@@ -135,6 +134,8 @@ RUN mkdir -p /home/user/build
 COPY ./entrypoint.sh /home/user/build/
 USER user
 WORKDIR /home/user/build
+
+RUN sudo DEBIAN_FRONTEND=noninteractive apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gdisk
 
 # ENTRYPOINT [ "/home/user/build/entrypoint.sh" ]
 CMD [ "bash", "-c", "/home/user/build/entrypoint.sh" ]
